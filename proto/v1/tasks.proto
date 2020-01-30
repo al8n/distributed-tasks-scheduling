@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package taskspb;
+
+service Tasks {
+    rpc SaveOneTask (SaveOneTaskRequest) returns (OneTaskReply) {}
+    rpc DeleteOneTask (DeleteOneTaskRequest) returns (OneTaskReply) {}
+    rpc GetOneTask (GetOneTaskRequest) returns (GetOneTaskReply) {}
+    rpc GetAllTasks (GetAllTasksRequest) returns (GetAllTasksReply) {}
+}
+
+message Task {
+    string name = 1;
+    string command = 2;
+    string expression = 3;
+}
+
+message SaveOneTaskRequest {
+    string token = 1;
+    Task task = 2;
+    string operator = 3;
+
+}
+
+message DeleteOneTaskRequest {
+    string token = 1;
+    string taskKey = 2;
+
+}
+
+message OneTaskReply {
+    int32 error_number = 1;
+    string msg = 2;
+}
+
+message GetOneTaskRequest {
+    string token = 1;
+    string taskKey = 2;
+}
+
+message GetOneTaskReply {
+    int32 error_number = 1;
+    string msg = 2;
+    Task task = 3;
+}
+
+message GetAllTasksRequest {
+    string token = 1;
+}
+
+message GetAllTasksReply {
+    int32 error_number = 1;
+    string msg = 2;
+    repeated Task tasks = 3;
+}
+
