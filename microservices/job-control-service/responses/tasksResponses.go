@@ -15,13 +15,13 @@ type Response struct {
 type GetOneTaskResponse struct {
 	Errno int32  `json:"error_number"`
 	Message string `json:"msg"`
-	Task entities.Task `json:"task"`
+	Task *entities.Task `json:"task"`
 }
 
 type GetAllTasksResponse struct {
 	Errno int32  `json:"error_number"`
 	Message string `json:"msg"`
-	Tasks []entities.Task `json:"tasks"`
+	Tasks []*entities.Task `json:"tasks"`
 }
 
 // 应答方法

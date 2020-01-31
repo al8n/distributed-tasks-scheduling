@@ -1,6 +1,6 @@
 {
   "API_RUN_ON_PORT_8777 ": "Provide CRUD services",
-  "http_port": 8777,
+  "http_port": 10010,
   "grpc_port": 50051,
 
 
@@ -8,7 +8,7 @@
   "read_time_out": 5000,
   "write_time_out": 5000,
 
-  "etcd_endpoints": ["127.0.0.1:2379", "192.168.10.11"],
+  "etcd_endpoints": ["127.0.0.1:2379"],
   "etcd_timeout": 5000,
 
   "mongo_endpoint": "mongodb://mongo-log:27017",

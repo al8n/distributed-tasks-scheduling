@@ -1,14 +1,20 @@
 package distribution
 
 import (
+
 	myconfig "github.com/ALiuGuanyan/distributed-task-scheduling/microservices/job-control-service/config"
-	"go.etcd.io/etcd/clientv3"
+	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/job-control-service/entities"
+	"github.com/coreos/etcd/clientv3"
 	"sync"
 	"time"
 )
 
 type EtcdInterface interface {
-
+	SaveOneTask(task *entities.Task) (oldTask *entities.Task, err error)
+	DeleteOneTask(name string) (oldTask *entities.Task, err error)
+	GetOneTask(name string) (task *entities.Task, err error)
+	GetAllTasks() (tasks []*entities.Task, err error)
+	KillTask(name string) (err error)
 }
 
 type EtcdDB struct {
@@ -18,20 +24,20 @@ type EtcdDB struct {
 }
 
 var (
-	EtcdSingleton *EtcdDB
+	SgtEtcd *EtcdDB
 	once sync.Once
 )
 
 func newEtcdSingleton(client *clientv3.Client, kv clientv3.KV, lease clientv3.Lease) *EtcdDB  {
 	once.Do(func() {
-		EtcdDBSingleton = &EtcdDB{
+		SgtEtcd= &EtcdDB{
 			client: client,
 			kv: kv,
 			lease: lease,
 		}
 	})
 
-	return EtcdSingleton
+	return SgtEtcd
 }
 
 // 初始化etcd连接

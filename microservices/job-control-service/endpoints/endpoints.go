@@ -6,25 +6,26 @@ import (
 	"sync"
 )
 
-type endpoints interface {
-	MakeSaveOneTaskEndPoint(svc service.TasksManagerService) endpoint.Endpoint
-	MakeDeleteOneTaskEndPoint(svc service.TasksManagerService) endpoint.Endpoint
-	MakeGetOneTaskEndPoint(svc service.TasksManagerService) endpoint.Endpoint
-	MakeGetAllTasksEndPoint(svc service.TasksManagerService) endpoint.Endpoint
+type Endpoints interface {
+	MakeSaveOneTaskEndPoint(svc service.Service) endpoint.Endpoint
+	MakeDeleteOneTaskEndPoint(svc service.Service) endpoint.Endpoint
+	MakeGetOneTaskEndPoint(svc service.Service) endpoint.Endpoint
+	MakeGetAllTasksEndPoint(svc service.Service) endpoint.Endpoint
 }
 
-type ImplEndpoints struct {}
+type ImplEndpoints struct {
+}
 
-var (
-	EndpointsSingleton *ImplEndpoints
+
+var  (
+	SgtEndpoints *ImplEndpoints
 	once sync.Once
 )
 
-func NewEndpoints() *ImplEndpoints  {
+func InitEndpoints() *ImplEndpoints  {
 	once.Do(func() {
-		EndpointsSingleton = &ImplEndpoints{}
+		SgtEndpoints = &ImplEndpoints{}
 	})
-
-	return EndpointsSingleton
+	return  SgtEndpoints
 }
 

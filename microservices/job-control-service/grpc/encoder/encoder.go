@@ -5,7 +5,7 @@ import (
 	"sync"
 )
 
-type encoder interface {
+type GRPCEncoder interface {
 	EncodeSaveOneTaskResponse(_ context.Context, response interface{}) (interface{}, error)
 	EncodeDeleteOneTaskResponse(_ context.Context, response interface{}) (interface{}, error)
 	EncodeGetOneTaskResponse(_ context.Context, response interface{}) (interface{}, error)
@@ -15,14 +15,14 @@ type encoder interface {
 type ImplEncoder struct {}
 
 var (
-	EncoderSingleton *ImplEncoder
+	SgtGRPCEncoder *ImplEncoder
 	once sync.Once
 )
 
-func NewEncoder() *ImplEncoder  {
+func InitGRPCEncoder() *ImplEncoder  {
 	once.Do(func() {
-		EncoderSingleton = &ImplEncoder{}
+		SgtGRPCEncoder = &ImplEncoder{}
 	})
-	return EncoderSingleton
+	return SgtGRPCEncoder
 }
 

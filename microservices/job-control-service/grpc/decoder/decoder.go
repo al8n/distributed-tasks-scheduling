@@ -5,7 +5,7 @@ import (
 	"sync"
 )
 
-type decoder interface {
+type GRPCDecoder interface {
 	DecodeSaveOneTaskRequest(ctx context.Context, grpcReq interface{}) (interface{}, error)
 	DecodeDeleteOneTaskRequest(ctx context.Context, grpcReq interface{}) (interface{}, error)
 	DecodeGetAllTasksRequest(ctx context.Context, grpcReq interface{}) (interface{}, error)
@@ -15,13 +15,13 @@ type decoder interface {
 type ImplDecoder struct {}
 
 var (
-	DecoderSingleton *ImplDecoder
+	SgtGRPCDecoder *ImplDecoder
 	once sync.Once
 )
 
-func NewDecoder() *ImplDecoder  {
+func InitGRPCDecoder() *ImplDecoder  {
 	once.Do(func() {
-		DecoderSingleton = &ImplDecoder{}
+		SgtGRPCDecoder = &ImplDecoder{}
 	})
-	return DecoderSingleton
+	return SgtGRPCDecoder
 }

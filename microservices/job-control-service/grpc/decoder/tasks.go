@@ -5,6 +5,7 @@ import (
 	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/job-control-service/entities"
 	taskspb "github.com/ALiuGuanyan/distributed-task-scheduling/microservices/job-control-service/grpc/pb/tasks"
 	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/job-control-service/requests"
+	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/job-control-service/utils/appErrors"
 	"log"
 )
 
@@ -12,7 +13,7 @@ func (gdc *ImplDecoder) DecodeSaveOneTaskRequest(ctx context.Context, grpcReq in
 err error) {
 	req, ok := grpcReq.(*taskspb.SaveOneTaskRequest)
 	if !ok {
-		return
+		return nil, appErrors.AssertError
 	}
 
 	return requests.SaveOneTaskRequest{
@@ -29,7 +30,7 @@ func (gdc *ImplDecoder) DecodeDeleteOneTaskRequest(ctx context.Context, grpcReq 
 err error) {
 	req, ok := grpcReq.(*taskspb.DeleteOneTaskRequest)
 	if !ok {
-		return
+		return nil, appErrors.AssertError
 	}
 
 	return requests.DeleteOneTaskRequest{Name: req.TaskKey}, nil
@@ -38,7 +39,7 @@ err error) {
 func (gdc *ImplDecoder) DecodeGetAllTasksRequest(ctx context.Context, grpcReq interface{}) (i interface{}, err error) {
 	req, ok := grpcReq.(*taskspb.GetAllTasksRequest)
 	if !ok {
-		return
+		return nil, appErrors.AssertError
 	}
 	log.Println(req.Token)
 	return requests.GetAllTasksRequest{}, nil
@@ -47,7 +48,7 @@ func (gdc *ImplDecoder) DecodeGetAllTasksRequest(ctx context.Context, grpcReq in
 func (gdc *ImplDecoder) DecodeGetOneTaskRequest(ctx context.Context, grpcReq interface{}) (i interface{}, err error) {
 	req, ok := grpcReq.(*taskspb.GetOneTaskRequest)
 	if !ok {
-		return
+		return nil, appErrors.AssertError
 	}
 	return  requests.GetOneTaskRequest{Name: req.TaskKey}, nil
 }

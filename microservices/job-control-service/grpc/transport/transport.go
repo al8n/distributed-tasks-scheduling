@@ -6,21 +6,22 @@ import (
 	grpctransport "github.com/go-kit/kit/transport/grpc"
 )
 
-type transport interface {
+type Transports interface {
 	SaveOneTask(ctx context.Context, request *taskspb.SaveOneTaskRequest) (*taskspb.OneTaskReply, error)
 	DeleteOneTask(ctx context.Context, request *taskspb.DeleteOneTaskRequest) (*taskspb.OneTaskReply, error)
 	GetOneTask(ctx context.Context, request *taskspb.GetOneTaskRequest) (*taskspb.GetOneTaskReply, error)
 	GetAllTasks(ctx context.Context, request *taskspb.GetAllTasksRequest) (*taskspb.GetAllTasksReply, error)
 }
 
-type ImplTransport struct {
+type ImplTasksTransport struct {
 	SaveOneTaskHandler grpctransport.Handler
 	DeleteOneTaskHandler grpctransport.Handler
 	GetOneTaskHandler grpctransport.Handler
 	GetAllTasksHandler grpctransport.Handler
 }
 
-func (tp *ImplTransport) SaveOneTask(ctx context.Context, request *taskspb.SaveOneTaskRequest) (rpy *taskspb.OneTaskReply, err error)  {
+
+func (tp *ImplTasksTransport) SaveOneTask(ctx context.Context, request *taskspb.SaveOneTaskRequest) (rpy *taskspb.OneTaskReply, err error)  {
 	_, rep, err := tp.SaveOneTaskHandler.ServeGRPC(ctx, request)
 	if err != nil {
 		return
@@ -29,8 +30,8 @@ func (tp *ImplTransport) SaveOneTask(ctx context.Context, request *taskspb.SaveO
 	return rep.(*taskspb.OneTaskReply), nil
 }
 
-func (tp *ImplTransport) DeleteOneTask(ctx context.Context, request *taskspb.DeleteOneTaskRequest) (rpy *taskspb.
-	OneTaskReply, err error)  {
+func (tp *ImplTasksTransport) DeleteOneTask(ctx context.Context, request *taskspb.DeleteOneTaskRequest) (rpy *taskspb.
+OneTaskReply, err error)  {
 	_, rep, err := tp.DeleteOneTaskHandler.ServeGRPC(ctx, request)
 	if err != nil {
 		return
@@ -39,7 +40,7 @@ func (tp *ImplTransport) DeleteOneTask(ctx context.Context, request *taskspb.Del
 	return rep.(*taskspb.OneTaskReply), nil
 }
 
-func (tp *ImplTransport) GetOneTask(ctx context.Context, request *taskspb.GetOneTaskRequest) (rpy *taskspb.GetOneTaskReply, err error)  {
+func (tp *ImplTasksTransport) GetOneTask(ctx context.Context, request *taskspb.GetOneTaskRequest) (rpy *taskspb.GetOneTaskReply, err error)  {
 	_, rep, err := tp.GetOneTaskHandler.ServeGRPC(ctx, request)
 	if err != nil {
 		return
@@ -48,7 +49,8 @@ func (tp *ImplTransport) GetOneTask(ctx context.Context, request *taskspb.GetOne
 	return rep.(*taskspb.GetOneTaskReply), nil
 }
 
-func (tp *ImplTransport) GetAllTasks(ctx context.Context, request *taskspb.SaveOneTaskRequest) (rpy *taskspb.GetAllTasksReply, err error)  {
+func (tp *ImplTasksTransport) GetAllTasks(ctx context.Context, request *taskspb.GetAllTasksRequest) (rpy *taskspb.
+GetAllTasksReply, err error)  {
 	_, rep, err := tp.GetAllTasksHandler.ServeGRPC(ctx, request)
 	if err != nil {
 		return
@@ -56,3 +58,4 @@ func (tp *ImplTransport) GetAllTasks(ctx context.Context, request *taskspb.SaveO
 
 	return rep.(*taskspb.GetAllTasksReply), nil
 }
+
