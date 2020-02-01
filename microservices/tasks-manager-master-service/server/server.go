@@ -12,7 +12,7 @@ import (
 	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/tasks-manager-master-service/middleware/logging"
 	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/tasks-manager-master-service/repositories/distribution"
 	mymongo "github.com/ALiuGuanyan/distributed-task-scheduling/microservices/tasks-manager-master-service/repositories/mongo"
-	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/tasks-manager-master-service/service"
+	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/tasks-manager-master-service/services"
 	"github.com/gorilla/mux"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"google.golang.org/grpc"
@@ -27,7 +27,7 @@ import (
 
 type Server struct {
 	router *mux.Router
-	svc    *service.ImplService
+	svc    *services.ImplService
 	srv	*http.Server
 	gsrv   *grpc.Server
 	gtp *mygrpctransport.ImplTasksTransport
@@ -51,7 +51,7 @@ func newServerSingleton() *Server  {
 
 		SgtServer = &Server{
 			router: r,
-			svc:    service.InitService(),
+			svc:    services.InitService(),
 			gsrv:   g,
 			srv: &http.Server{
 				Handler: r,

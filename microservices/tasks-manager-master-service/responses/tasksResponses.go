@@ -2,7 +2,7 @@ package responses
 
 import (
 	"encoding/json"
-	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/tasks-manager-master-service/entities"
+	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/entities"
 )
 
 type Response struct {
@@ -13,14 +13,14 @@ type Response struct {
 
 
 type GetOneTaskResponse struct {
-	Errno int32  `json:"error_number"`
-	Message string `json:"msg"`
+	Errno int32         `json:"error_number"`
+	Message string      `json:"msg"`
 	Task *entities.Task `json:"task"`
 }
 
 type GetAllTasksResponse struct {
-	Errno int32  `json:"error_number"`
-	Message string `json:"msg"`
+	Errno int32            `json:"error_number"`
+	Message string         `json:"msg"`
 	Tasks []*entities.Task `json:"tasks"`
 }
 

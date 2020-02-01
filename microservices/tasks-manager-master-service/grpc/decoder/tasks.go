@@ -2,7 +2,7 @@ package decoder
 
 import (
 	"context"
-	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/tasks-manager-master-service/entities"
+	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/entities"
 	taskspb "github.com/ALiuGuanyan/distributed-task-scheduling/microservices/tasks-manager-master-service/grpc/pb/tasks"
 	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/tasks-manager-master-service/requests"
 	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/tasks-manager-master-service/utils/appErrors"

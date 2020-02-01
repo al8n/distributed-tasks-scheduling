@@ -1,0 +1,5 @@
+{
+  "etcd_endpoints": ["task-etcd:2379"],
+  "etcd_timeout": 5000,
+  "task_event_capacity": 1000
+}

@@ -17,7 +17,7 @@ var (
 func initArgs() {
 	// master -config ./master.json -xxx 123 -yyy ddd
 	// master -h
-	flag.StringVar(&confFile, "config", "../conf/tasks-manager-master-config.json", "指定config.json")
+	flag.StringVar(&confFile, "config", "../conf/tasks-manager-master-config.json", "please specify config file")
 	flag.Parse()
 }
 

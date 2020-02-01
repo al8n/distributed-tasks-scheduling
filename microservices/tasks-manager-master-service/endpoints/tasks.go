@@ -4,12 +4,12 @@ import (
 	"context"
 	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/tasks-manager-master-service/requests"
 	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/tasks-manager-master-service/responses"
-	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/tasks-manager-master-service/service"
+	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/tasks-manager-master-service/services"
 	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/tasks-manager-master-service/utils/appErrors"
 	"github.com/go-kit/kit/endpoint"
 )
 
-func (ep *ImplEndpoints) MakeSaveOneTaskEndPoint(svc service.Service) endpoint.Endpoint {
+func (ep *ImplEndpoints) MakeSaveOneTaskEndPoint(svc services.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req, ok := request.(requests.SaveOneTaskRequest)
 		if !ok {
@@ -32,7 +32,7 @@ func (ep *ImplEndpoints) MakeSaveOneTaskEndPoint(svc service.Service) endpoint.E
 	}
 }
 
-func (ep *ImplEndpoints) MakeDeleteOneTaskEndPoint(svc service.Service) endpoint.Endpoint {
+func (ep *ImplEndpoints) MakeDeleteOneTaskEndPoint(svc services.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req, ok := request.(requests.DeleteOneTaskRequest)
 		if !ok {
@@ -54,7 +54,7 @@ func (ep *ImplEndpoints) MakeDeleteOneTaskEndPoint(svc service.Service) endpoint
 	}
 }
 
-func (ep *ImplEndpoints) MakeGetOneTaskEndPoint(svc service.Service) endpoint.Endpoint  {
+func (ep *ImplEndpoints) MakeGetOneTaskEndPoint(svc services.Service) endpoint.Endpoint  {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req, ok := request.(requests.GetOneTaskRequest)
 		if !ok {
@@ -77,7 +77,7 @@ func (ep *ImplEndpoints) MakeGetOneTaskEndPoint(svc service.Service) endpoint.En
 	}
 }
 
-func (ep *ImplEndpoints) MakeGetAllTasksEndPoint(svc service.Service) endpoint.Endpoint  {
+func (ep *ImplEndpoints) MakeGetAllTasksEndPoint(svc services.Service) endpoint.Endpoint  {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		_, ok := request.(requests.GetAllTasksRequest)
 		if !ok {
@@ -100,7 +100,7 @@ func (ep *ImplEndpoints) MakeGetAllTasksEndPoint(svc service.Service) endpoint.E
 	}
 }
 
-func (ep *ImplEndpoints) MakeKillOneTaskEndPoint(svc service.Service) endpoint.Endpoint {
+func (ep *ImplEndpoints) MakeKillOneTaskEndPoint(svc services.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req, ok := request.(requests.KillOneTaskRequest)
 		if !ok {

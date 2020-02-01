@@ -3,8 +3,9 @@ package distribution
 import (
 	"context"
 	"encoding/json"
+	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/conf"
+	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/entities"
 	myconfig "github.com/ALiuGuanyan/distributed-task-scheduling/microservices/tasks-manager-master-service/config"
-	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/tasks-manager-master-service/entities"
 	"github.com/coreos/etcd/clientv3"
 	"github.com/coreos/etcd/mvcc/mvccpb"
 	"time"
@@ -13,16 +14,16 @@ import (
 func (e *EtcdDB) SaveOneTask(task *entities.Task) (oldTask *entities.Task, err error) {
 	// 把任务保存到/cron/tasks/任务名 -> json
 	var (
-		taskKey string
-		taskValue []byte
-		putResp *clientv3.PutResponse
+		taskKey     string
+		taskValue   []byte
+		putResp     *clientv3.PutResponse
 		oldTasksObj entities.Task
-		ctx context.Context
-		cancelFunc context.CancelFunc
+		ctx         context.Context
+		cancelFunc  context.CancelFunc
 	)
 
 	// ectd 保存的key
-	taskKey = myconfig.JOB_SAVE_DIR + task.Name
+	taskKey = conf.TASK_SAVE_DIR + task.Name
 
 	// 任务信息json
 	if taskValue, err = json.Marshal(task); err != nil {
@@ -52,15 +53,15 @@ func (e *EtcdDB) SaveOneTask(task *entities.Task) (oldTask *entities.Task, err e
 
 func (e *EtcdDB) DeleteOneTask(name string) (oldTask *entities.Task, err error) {
 	var (
-		taskKey string
-		delResp *clientv3.DeleteResponse
+		taskKey     string
+		delResp     *clientv3.DeleteResponse
 		oldTasksObj entities.Task
-		ctx context.Context
-		cancelFunc context.CancelFunc
+		ctx         context.Context
+		cancelFunc  context.CancelFunc
 	)
 
 	// etcd中保存任务的key
-	taskKey = myconfig.JOB_SAVE_DIR + name
+	taskKey = conf.TASK_SAVE_DIR + name
 
 	ctx, cancelFunc = context.WithTimeout(context.Background(), time.Duration(myconfig.ConfigSingleton.EtcdTimeout) * time.Millisecond)
 	defer cancelFunc()
@@ -91,7 +92,7 @@ func (e *EtcdDB) GetOneTask(name string) (task *entities.Task, err error) {
 		cancelFunc context.CancelFunc
 	)
 
-	taskKey = myconfig.JOB_SAVE_DIR + name
+	taskKey = conf.TASK_SAVE_DIR + name
 
 	ctx, cancelFunc = context.WithTimeout(context.Background(), time.Duration(myconfig.ConfigSingleton.EtcdTimeout) * time.Millisecond)
 	defer cancelFunc()
@@ -120,7 +121,7 @@ func (e *EtcdDB) GetAllTasks() (tasks []*entities.Task, err error) {
 
 
 	// 任务保存的目录
-	dirKey = myconfig.JOB_SAVE_DIR
+	dirKey = conf.TASK_SAVE_DIR
 
 	ctx, cancelFunc = context.WithTimeout(context.Background(), time.Duration(myconfig.ConfigSingleton.EtcdTimeout) * time.Millisecond)
 	defer cancelFunc()
@@ -155,7 +156,7 @@ func (e *EtcdDB) KillTask(name string) (err error)  {
 	)
 
 	// 通知worker杀死对应任务
-	killerKey = myconfig.JOB_KILLER_DIR + name
+	killerKey = conf.TASK_KILLER_DIR + name
 
 	ctx, cancelFunc = context.WithTimeout(context.Background(), time.Duration(myconfig.ConfigSingleton.EtcdTimeout) * time.Millisecond)
 	defer cancelFunc()
