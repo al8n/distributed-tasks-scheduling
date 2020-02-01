@@ -114,6 +114,59 @@ class SaveOneTaskRequest extends $pb.GeneratedMessage {
   void clearOperator() => clearField(3);
 }
 
+class SaveOneTaskReply extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('SaveOneTaskReply', package: const $pb.PackageName('taskspb'), createEmptyInstance: create)
+    ..a<$core.int>(1, 'errorNumber', $pb.PbFieldType.O3)
+    ..aOS(2, 'msg')
+    ..aOM<Task>(3, 'task', subBuilder: Task.create)
+    ..hasRequiredFields = false
+  ;
+
+  SaveOneTaskReply._() : super();
+  factory SaveOneTaskReply() => create();
+  factory SaveOneTaskReply.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SaveOneTaskReply.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  SaveOneTaskReply clone() => SaveOneTaskReply()..mergeFromMessage(this);
+  SaveOneTaskReply copyWith(void Function(SaveOneTaskReply) updates) => super.copyWith((message) => updates(message as SaveOneTaskReply));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SaveOneTaskReply create() => SaveOneTaskReply._();
+  SaveOneTaskReply createEmptyInstance() => create();
+  static $pb.PbList<SaveOneTaskReply> createRepeated() => $pb.PbList<SaveOneTaskReply>();
+  @$core.pragma('dart2js:noInline')
+  static SaveOneTaskReply getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SaveOneTaskReply>(create);
+  static SaveOneTaskReply _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get errorNumber => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set errorNumber($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasErrorNumber() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearErrorNumber() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get msg => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set msg($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasMsg() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearMsg() => clearField(2);
+
+  @$pb.TagNumber(3)
+  Task get task => $_getN(2);
+  @$pb.TagNumber(3)
+  set task(Task v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasTask() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearTask() => clearField(3);
+  @$pb.TagNumber(3)
+  Task ensureTask() => $_ensure(2);
+}
+
 class DeleteOneTaskRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('DeleteOneTaskRequest', package: const $pb.PackageName('taskspb'), createEmptyInstance: create)
     ..aOS(1, 'token')
@@ -155,27 +208,109 @@ class DeleteOneTaskRequest extends $pb.GeneratedMessage {
   void clearTaskKey() => clearField(2);
 }
 
-class OneTaskReply extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('OneTaskReply', package: const $pb.PackageName('taskspb'), createEmptyInstance: create)
+class DeleteOneTaskReply extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('DeleteOneTaskReply', package: const $pb.PackageName('taskspb'), createEmptyInstance: create)
     ..a<$core.int>(1, 'errorNumber', $pb.PbFieldType.O3)
     ..aOS(2, 'msg')
     ..hasRequiredFields = false
   ;
 
-  OneTaskReply._() : super();
-  factory OneTaskReply() => create();
-  factory OneTaskReply.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory OneTaskReply.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  OneTaskReply clone() => OneTaskReply()..mergeFromMessage(this);
-  OneTaskReply copyWith(void Function(OneTaskReply) updates) => super.copyWith((message) => updates(message as OneTaskReply));
+  DeleteOneTaskReply._() : super();
+  factory DeleteOneTaskReply() => create();
+  factory DeleteOneTaskReply.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory DeleteOneTaskReply.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  DeleteOneTaskReply clone() => DeleteOneTaskReply()..mergeFromMessage(this);
+  DeleteOneTaskReply copyWith(void Function(DeleteOneTaskReply) updates) => super.copyWith((message) => updates(message as DeleteOneTaskReply));
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static OneTaskReply create() => OneTaskReply._();
-  OneTaskReply createEmptyInstance() => create();
-  static $pb.PbList<OneTaskReply> createRepeated() => $pb.PbList<OneTaskReply>();
+  static DeleteOneTaskReply create() => DeleteOneTaskReply._();
+  DeleteOneTaskReply createEmptyInstance() => create();
+  static $pb.PbList<DeleteOneTaskReply> createRepeated() => $pb.PbList<DeleteOneTaskReply>();
   @$core.pragma('dart2js:noInline')
-  static OneTaskReply getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<OneTaskReply>(create);
-  static OneTaskReply _defaultInstance;
+  static DeleteOneTaskReply getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DeleteOneTaskReply>(create);
+  static DeleteOneTaskReply _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get errorNumber => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set errorNumber($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasErrorNumber() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearErrorNumber() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get msg => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set msg($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasMsg() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearMsg() => clearField(2);
+}
+
+class KillOneTaskRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('KillOneTaskRequest', package: const $pb.PackageName('taskspb'), createEmptyInstance: create)
+    ..aOS(1, 'token')
+    ..aOS(2, 'taskKey', protoName: 'taskKey')
+    ..hasRequiredFields = false
+  ;
+
+  KillOneTaskRequest._() : super();
+  factory KillOneTaskRequest() => create();
+  factory KillOneTaskRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory KillOneTaskRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  KillOneTaskRequest clone() => KillOneTaskRequest()..mergeFromMessage(this);
+  KillOneTaskRequest copyWith(void Function(KillOneTaskRequest) updates) => super.copyWith((message) => updates(message as KillOneTaskRequest));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static KillOneTaskRequest create() => KillOneTaskRequest._();
+  KillOneTaskRequest createEmptyInstance() => create();
+  static $pb.PbList<KillOneTaskRequest> createRepeated() => $pb.PbList<KillOneTaskRequest>();
+  @$core.pragma('dart2js:noInline')
+  static KillOneTaskRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<KillOneTaskRequest>(create);
+  static KillOneTaskRequest _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get token => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set token($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasToken() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearToken() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get taskKey => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set taskKey($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasTaskKey() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearTaskKey() => clearField(2);
+}
+
+class KillOneTaskReply extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('KillOneTaskReply', package: const $pb.PackageName('taskspb'), createEmptyInstance: create)
+    ..a<$core.int>(1, 'errorNumber', $pb.PbFieldType.O3)
+    ..aOS(2, 'msg')
+    ..hasRequiredFields = false
+  ;
+
+  KillOneTaskReply._() : super();
+  factory KillOneTaskReply() => create();
+  factory KillOneTaskReply.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory KillOneTaskReply.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  KillOneTaskReply clone() => KillOneTaskReply()..mergeFromMessage(this);
+  KillOneTaskReply copyWith(void Function(KillOneTaskReply) updates) => super.copyWith((message) => updates(message as KillOneTaskReply));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static KillOneTaskReply create() => KillOneTaskReply._();
+  KillOneTaskReply createEmptyInstance() => create();
+  static $pb.PbList<KillOneTaskReply> createRepeated() => $pb.PbList<KillOneTaskReply>();
+  @$core.pragma('dart2js:noInline')
+  static KillOneTaskReply getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<KillOneTaskReply>(create);
+  static KillOneTaskReply _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.int get errorNumber => $_getIZ(0);
@@ -370,13 +505,17 @@ class TasksApi {
   $pb.RpcClient _client;
   TasksApi(this._client);
 
-  $async.Future<OneTaskReply> saveOneTask($pb.ClientContext ctx, SaveOneTaskRequest request) {
-    var emptyResponse = OneTaskReply();
-    return _client.invoke<OneTaskReply>(ctx, 'Tasks', 'SaveOneTask', request, emptyResponse);
+  $async.Future<SaveOneTaskReply> saveOneTask($pb.ClientContext ctx, SaveOneTaskRequest request) {
+    var emptyResponse = SaveOneTaskReply();
+    return _client.invoke<SaveOneTaskReply>(ctx, 'Tasks', 'SaveOneTask', request, emptyResponse);
   }
-  $async.Future<OneTaskReply> deleteOneTask($pb.ClientContext ctx, DeleteOneTaskRequest request) {
-    var emptyResponse = OneTaskReply();
-    return _client.invoke<OneTaskReply>(ctx, 'Tasks', 'DeleteOneTask', request, emptyResponse);
+  $async.Future<DeleteOneTaskReply> deleteOneTask($pb.ClientContext ctx, DeleteOneTaskRequest request) {
+    var emptyResponse = DeleteOneTaskReply();
+    return _client.invoke<DeleteOneTaskReply>(ctx, 'Tasks', 'DeleteOneTask', request, emptyResponse);
+  }
+  $async.Future<KillOneTaskReply> killOneTask($pb.ClientContext ctx, KillOneTaskRequest request) {
+    var emptyResponse = KillOneTaskReply();
+    return _client.invoke<KillOneTaskReply>(ctx, 'Tasks', 'KillOneTask', request, emptyResponse);
   }
   $async.Future<GetOneTaskReply> getOneTask($pb.ClientContext ctx, GetOneTaskRequest request) {
     var emptyResponse = GetOneTaskReply();

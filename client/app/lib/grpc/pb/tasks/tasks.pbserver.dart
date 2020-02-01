@@ -16,8 +16,9 @@ import 'tasks.pbjson.dart';
 export 'tasks.pb.dart';
 
 abstract class TasksServiceBase extends $pb.GeneratedService {
-  $async.Future<$0.OneTaskReply> saveOneTask($pb.ServerContext ctx, $0.SaveOneTaskRequest request);
-  $async.Future<$0.OneTaskReply> deleteOneTask($pb.ServerContext ctx, $0.DeleteOneTaskRequest request);
+  $async.Future<$0.SaveOneTaskReply> saveOneTask($pb.ServerContext ctx, $0.SaveOneTaskRequest request);
+  $async.Future<$0.DeleteOneTaskReply> deleteOneTask($pb.ServerContext ctx, $0.DeleteOneTaskRequest request);
+  $async.Future<$0.KillOneTaskReply> killOneTask($pb.ServerContext ctx, $0.KillOneTaskRequest request);
   $async.Future<$0.GetOneTaskReply> getOneTask($pb.ServerContext ctx, $0.GetOneTaskRequest request);
   $async.Future<$0.GetAllTasksReply> getAllTasks($pb.ServerContext ctx, $0.GetAllTasksRequest request);
 
@@ -25,6 +26,7 @@ abstract class TasksServiceBase extends $pb.GeneratedService {
     switch (method) {
       case 'SaveOneTask': return $0.SaveOneTaskRequest();
       case 'DeleteOneTask': return $0.DeleteOneTaskRequest();
+      case 'KillOneTask': return $0.KillOneTaskRequest();
       case 'GetOneTask': return $0.GetOneTaskRequest();
       case 'GetAllTasks': return $0.GetAllTasksRequest();
       default: throw $core.ArgumentError('Unknown method: $method');
@@ -35,6 +37,7 @@ abstract class TasksServiceBase extends $pb.GeneratedService {
     switch (method) {
       case 'SaveOneTask': return this.saveOneTask(ctx, request);
       case 'DeleteOneTask': return this.deleteOneTask(ctx, request);
+      case 'KillOneTask': return this.killOneTask(ctx, request);
       case 'GetOneTask': return this.getOneTask(ctx, request);
       case 'GetAllTasks': return this.getAllTasks(ctx, request);
       default: throw $core.ArgumentError('Unknown method: $method');

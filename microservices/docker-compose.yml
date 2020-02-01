@@ -1,0 +1,99 @@
+version: "3"
+services:
+  mongo:
+    image: "mongo"
+    networks:
+      - microservice
+    volumes:
+      - task-mongo-data:/data/db
+
+  etcd:
+    image: "bitnami/etcd"
+    container_name: "task-etcd"
+    networks:
+      - microservice
+    ports:
+      - "12379:2379"
+      - "12380:2380"
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+      - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
+
+
+  #  user-api:
+  #    image: "user-service"
+  #    container_name: "user-apis"
+  #    ports:
+  #      - "10010:10010"
+  #      - "50051:50051"
+  #    networks:
+  #      - user_microservice
+  #    depends_on:
+  #      - user-cache-redis
+  #      - user-neo4j-db
+  #    volumes:
+  #      - $GOPATH:/share
+  #    command: sh
+
+  cadvisor:
+    image: "gcr.io/google-containers/cadvisor"
+    container_name: "task-cadvisor"
+    ports:
+      - "9091:8080"
+    networks:
+      - microservice
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+
+  prometheus:
+    image: "prom/prometheus"
+    container_name: "task-prometheus"
+    ports:
+      - "9090:9090"
+    networks:
+      - microservice
+    volumes:
+      - /Users/Al/Development/golang/src/github.com/ALiuGuanyan/distributed-task-scheduling/microservices/conf/prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - cadvisor
+      - grafana
+
+  node-exporter:
+    image: "prom/node-exporter"
+    container_name: "task-node-exporter"
+    ports:
+      - "9092:9100"
+    networks:
+      - microservice
+
+  grafana:
+    image: "grafana/grafana"
+    container_name: "task-grafana"
+    ports:
+      - "9093:3000"
+    networks:
+      - microservice
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=PACKT
+      - GF_USERS_ALLOW_SIGN_UP=false
+
+  grpcui:
+    image: "wongnai/grpcui"
+    environment:
+      - GRPCUI_SERVER=userservice:50051
+    ports:
+      - "10012:8080"
+    networks:
+      - microservice
+
+networks:
+  microservice:
+    external: true
+
+volumes:
+  task-mongo-data:
+    external: false
+

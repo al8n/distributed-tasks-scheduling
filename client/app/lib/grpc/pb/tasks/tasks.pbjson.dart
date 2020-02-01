@@ -23,6 +23,15 @@ const SaveOneTaskRequest$json = const {
   ],
 };
 
+const SaveOneTaskReply$json = const {
+  '1': 'SaveOneTaskReply',
+  '2': const [
+    const {'1': 'error_number', '3': 1, '4': 1, '5': 5, '10': 'errorNumber'},
+    const {'1': 'msg', '3': 2, '4': 1, '5': 9, '10': 'msg'},
+    const {'1': 'task', '3': 3, '4': 1, '5': 11, '6': '.taskspb.Task', '10': 'task'},
+  ],
+};
+
 const DeleteOneTaskRequest$json = const {
   '1': 'DeleteOneTaskRequest',
   '2': const [
@@ -31,8 +40,24 @@ const DeleteOneTaskRequest$json = const {
   ],
 };
 
-const OneTaskReply$json = const {
-  '1': 'OneTaskReply',
+const DeleteOneTaskReply$json = const {
+  '1': 'DeleteOneTaskReply',
+  '2': const [
+    const {'1': 'error_number', '3': 1, '4': 1, '5': 5, '10': 'errorNumber'},
+    const {'1': 'msg', '3': 2, '4': 1, '5': 9, '10': 'msg'},
+  ],
+};
+
+const KillOneTaskRequest$json = const {
+  '1': 'KillOneTaskRequest',
+  '2': const [
+    const {'1': 'token', '3': 1, '4': 1, '5': 9, '10': 'token'},
+    const {'1': 'taskKey', '3': 2, '4': 1, '5': 9, '10': 'taskKey'},
+  ],
+};
+
+const KillOneTaskReply$json = const {
+  '1': 'KillOneTaskReply',
   '2': const [
     const {'1': 'error_number', '3': 1, '4': 1, '5': 5, '10': 'errorNumber'},
     const {'1': 'msg', '3': 2, '4': 1, '5': 9, '10': 'msg'},
@@ -75,8 +100,9 @@ const GetAllTasksReply$json = const {
 const TasksServiceBase$json = const {
   '1': 'Tasks',
   '2': const [
-    const {'1': 'SaveOneTask', '2': '.taskspb.SaveOneTaskRequest', '3': '.taskspb.OneTaskReply', '4': const {}},
-    const {'1': 'DeleteOneTask', '2': '.taskspb.DeleteOneTaskRequest', '3': '.taskspb.OneTaskReply', '4': const {}},
+    const {'1': 'SaveOneTask', '2': '.taskspb.SaveOneTaskRequest', '3': '.taskspb.SaveOneTaskReply', '4': const {}},
+    const {'1': 'DeleteOneTask', '2': '.taskspb.DeleteOneTaskRequest', '3': '.taskspb.DeleteOneTaskReply', '4': const {}},
+    const {'1': 'KillOneTask', '2': '.taskspb.KillOneTaskRequest', '3': '.taskspb.KillOneTaskReply', '4': const {}},
     const {'1': 'GetOneTask', '2': '.taskspb.GetOneTaskRequest', '3': '.taskspb.GetOneTaskReply', '4': const {}},
     const {'1': 'GetAllTasks', '2': '.taskspb.GetAllTasksRequest', '3': '.taskspb.GetAllTasksReply', '4': const {}},
   ],
@@ -85,8 +111,11 @@ const TasksServiceBase$json = const {
 const TasksServiceBase$messageJson = const {
   '.taskspb.SaveOneTaskRequest': SaveOneTaskRequest$json,
   '.taskspb.Task': Task$json,
-  '.taskspb.OneTaskReply': OneTaskReply$json,
+  '.taskspb.SaveOneTaskReply': SaveOneTaskReply$json,
   '.taskspb.DeleteOneTaskRequest': DeleteOneTaskRequest$json,
+  '.taskspb.DeleteOneTaskReply': DeleteOneTaskReply$json,
+  '.taskspb.KillOneTaskRequest': KillOneTaskRequest$json,
+  '.taskspb.KillOneTaskReply': KillOneTaskReply$json,
   '.taskspb.GetOneTaskRequest': GetOneTaskRequest$json,
   '.taskspb.GetOneTaskReply': GetOneTaskReply$json,
   '.taskspb.GetAllTasksRequest': GetAllTasksRequest$json,

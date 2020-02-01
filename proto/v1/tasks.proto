@@ -3,8 +3,9 @@ syntax = "proto3";
 package taskspb;
 
 service Tasks {
-    rpc SaveOneTask (SaveOneTaskRequest) returns (OneTaskReply) {}
-    rpc DeleteOneTask (DeleteOneTaskRequest) returns (OneTaskReply) {}
+    rpc SaveOneTask (SaveOneTaskRequest) returns (SaveOneTaskReply) {}
+    rpc DeleteOneTask (DeleteOneTaskRequest) returns (DeleteOneTaskReply) {}
+    rpc KillOneTask (KillOneTaskRequest) returns (KillOneTaskReply) {}
     rpc GetOneTask (GetOneTaskRequest) returns (GetOneTaskReply) {}
     rpc GetAllTasks (GetAllTasksRequest) returns (GetAllTasksReply) {}
 }
@@ -22,16 +23,33 @@ message SaveOneTaskRequest {
 
 }
 
+message SaveOneTaskReply {
+    int32 error_number = 1;
+    string msg = 2;
+    Task task = 3;
+}
+
 message DeleteOneTaskRequest {
     string token = 1;
     string taskKey = 2;
-
 }
 
-message OneTaskReply {
+message DeleteOneTaskReply {
     int32 error_number = 1;
     string msg = 2;
 }
+
+message KillOneTaskRequest {
+    string token = 1;
+    string taskKey = 2;
+}
+
+message KillOneTaskReply {
+    int32 error_number = 1;
+    string msg = 2;
+}
+
+
 
 message GetOneTaskRequest {
     string token = 1;

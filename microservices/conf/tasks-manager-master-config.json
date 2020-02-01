@@ -1,0 +1,19 @@
+{
+  "API_RUN_ON_PORT_8777 ": "Provide CRUD services",
+  "http_port": 8080,
+  "grpc_port": 50051,
+
+
+  "TIME_UNIT": "ms",
+  "read_time_out": 5000,
+  "write_time_out": 5000,
+
+  "etcd_endpoints": ["task-etcd:2379"],
+  "etcd_timeout": 5000,
+
+  "mongo_endpoint": "mongodb://mongo-log:27017",
+  "mongo_timeout": 5000,
+  "mongo_database": "cron",
+  "mongo_collection": "log"
+
+}
