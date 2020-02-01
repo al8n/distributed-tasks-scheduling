@@ -12,7 +12,7 @@ type scheduler interface {
 	ScheduleLoop()
 	TrySchedule() (scheduleAfter time.Duration)
 	HandleTaskEvent(te *entities.TaskEvent)
-	PublishTaskEvent(te  *entities.TaskEvent)
+	PushTaskEvent(te  *entities.TaskEvent)
 	TryStartTask(tsp *entities.TaskSchedulePlan)
 	PushTaskResultBack(ter *entities.TaskExecuteResult)
 	HandleTaskResult(rst *entities.TaskExecuteResult)
@@ -124,6 +124,8 @@ func (s *Scheduler) HandleTaskEvent(te *entities.TaskEvent)  {
 		tsp *entities.TaskSchedulePlan
 		isExist bool
 		err error
+		tei *entities.TaskExecuteInfo
+		isTaskExecuting bool
 	)
 	switch te.EventType {
 	case entities.SAVE: // 保存任务事情
@@ -135,11 +137,16 @@ func (s *Scheduler) HandleTaskEvent(te *entities.TaskEvent)  {
 		if tsp, isExist = s.taskPlanTable[te.Task.Name]; isExist {
 			delete(s.taskPlanTable, te.Task.Name)
 		}
+	case entities.KILL:
+		// 取消掉command执行
+		if  tei, isTaskExecuting = s.taskExcutingTable[te.Task.Name]; isTaskExecuting {
+			tei.CancelFunc() // 触发command杀死shell子进程 任务得到退出
+		}
 	}
 }
 
 // 推送任务变化事件
-func (s *Scheduler) PublishTaskEvent(te  *entities.TaskEvent) {
+func (s *Scheduler) PushTaskEvent(te  *entities.TaskEvent) {
 	s.taskEventChan <- te
 }
 

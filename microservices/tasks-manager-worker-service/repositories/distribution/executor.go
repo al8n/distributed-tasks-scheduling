@@ -1,7 +1,6 @@
 package distribution
 
 import (
-	"context"
 	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/entities"
 	"os/exec"
 	"sync"
@@ -63,7 +62,7 @@ func (e *Executor) ExecuteTask(info *entities.TaskExecuteInfo)  {
 			rst.StartTime = time.Now()
 
 			// 执行shell命令
-			cmd = exec.CommandContext(context.TODO(), "/bin/bash", "-c", info.Task.Command)
+			cmd = exec.CommandContext(info.Context, "/bin/bash", "-c", info.Task.Command)
 
 			// 执行并捕获输出
 			output, err = cmd.CombinedOutput()

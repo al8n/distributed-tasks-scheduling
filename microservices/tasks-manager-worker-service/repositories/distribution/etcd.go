@@ -14,6 +14,7 @@ import (
 
 type etcd interface {
 	WatchTasks() (err error)
+	WatchKiller()
 	CreateTaskLock(taskName  string) (lock *Lock)
 }
 
@@ -69,7 +70,43 @@ func InitEtcd() (err error)  {
 
 	// 启动任务监听
 	SgtEtcd.WatchTasks()
+
+	// 启动监听killer
+	SgtEtcd.WatchKiller()
 	return
+}
+
+// 监听强杀任务通知
+func (e *EtcdDB) WatchKiller() {
+	var (
+		wc clientv3.WatchChan
+		wr clientv3.WatchResponse
+		we *clientv3.Event
+		te *entities.TaskEvent
+		taskName string
+		task *entities.Task
+	)
+	go func() { // 监听协程
+		// 监听/cron/killer/目录的后续变化
+		wc = e.watcher.Watch(context.TODO(), conf.TASK_KILLER_DIR, clientv3.WithPrefix())
+
+		// 处理监听事件
+		for wr = range wc {
+			for _, we = range wr.Events {
+				switch we.Type {
+				case mvccpb.PUT: // 杀死任务事件
+					taskName = entities.ExtractKillerName(string(we.Kv.Key))
+					task = &entities.Task{Name: taskName}
+					te = entities.BuildTaskEvent(entities.KILL, task)
+					// 变化推送给scheduler
+					SgtScheduler.PushTaskEvent(te)
+				case mvccpb.DELETE: // killer标记过期被自动删除
+				}
+
+
+			}
+		}
+	}()
 }
 
 // 监听任务变化
@@ -97,7 +134,7 @@ func (e *EtcdDB) WatchTasks() (err error) {
 
 			te = entities.BuildTaskEvent(entities.SAVE, task)
 			//同步给调度协程scheduler
-			SgtScheduler.PublishTaskEvent(te)
+			SgtScheduler.PushTaskEvent(te)
 		}
 	}
 
@@ -127,7 +164,7 @@ func (e *EtcdDB) WatchTasks() (err error) {
 				}
 
 				// 变化推送给scheduler
-				SgtScheduler.PublishTaskEvent(te)
+				SgtScheduler.PushTaskEvent(te)
 			}
 		}
 	}()
