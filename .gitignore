@@ -13,3 +13,44 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+
+*/*/vendor/
+
+
+# Miscellaneous
+client/app/*.class
+client/app/*.log
+client/app/*.pyc
+client/app/*.swp
+client/app/.DS_Store
+client/app/.atom/
+client/app/.buildlog/
+client/app/.history
+client/app/.svn/
+
+# IntelliJ related
+client/app/*.iml
+client/app/*.ipr
+client/app/*.iws
+client/app/.idea/
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
+
+# Flutter/Dart/Pub related
+client/app/**/doc/api/
+client/app/.dart_tool/
+client/app/.flutter-plugins
+client/app/.packages
+client/app/.pub-cache/
+client/app/.pub/
+client/app/build/
+
+
+# Web related
+client/app/lib/generated_plugin_registrant.dart
+
+# Exceptions to above rules.
+client/app/!/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
