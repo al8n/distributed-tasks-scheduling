@@ -2,7 +2,7 @@ package mongo
 
 import (
 	"context"
-	myconfig "github.com/ALiuGuanyan/distributed-task-scheduling/microservices/tasks-manager-master-service/config"
+	myconfig "github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/config"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"sync"

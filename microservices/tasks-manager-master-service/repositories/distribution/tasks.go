@@ -3,9 +3,9 @@ package distribution
 import (
 	"context"
 	"encoding/json"
-	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/conf"
-	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/entities"
-	myconfig "github.com/ALiuGuanyan/distributed-task-scheduling/microservices/tasks-manager-master-service/config"
+	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/conf"
+	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/entities"
+	myconfig "github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/config"
 	"github.com/coreos/etcd/clientv3"
 	"github.com/coreos/etcd/mvcc/mvccpb"
 	"time"

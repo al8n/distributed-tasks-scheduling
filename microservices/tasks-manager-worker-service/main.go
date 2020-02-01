@@ -2,8 +2,8 @@ package main
 
 import (
 	"flag"
-	myconfig "github.com/ALiuGuanyan/distributed-task-scheduling/microservices/tasks-manager-worker-service/config"
-	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/tasks-manager-worker-service/repositories/distribution"
+	myconfig "github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-worker-service/config"
+	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-worker-service/repositories/distribution"
 	"log"
 	"runtime"
 )

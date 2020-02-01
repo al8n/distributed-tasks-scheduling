@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/tasks-manager-master-service/middleware/logging"
+	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/middleware/logging"
 	"github.com/go-kit/kit/endpoint"
 	"github.com/go-kit/kit/log"
 	"sync"

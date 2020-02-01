@@ -1,6 +1,6 @@
 package requests
 
-import "github.com/ALiuGuanyan/distributed-task-scheduling/microservices/entities"
+import "github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/entities"
 
 type SaveOneTaskRequest struct {
 	Task     entities.Task `json:"task"`

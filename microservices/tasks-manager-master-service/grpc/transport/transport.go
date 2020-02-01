@@ -2,7 +2,7 @@ package transport
 
 import (
 	"context"
-	taskspb "github.com/ALiuGuanyan/distributed-task-scheduling/microservices/tasks-manager-master-service/grpc/pb/tasks"
+	taskspb "github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/grpc/pb/tasks"
 	grpctransport "github.com/go-kit/kit/transport/grpc"
 )
 

@@ -3,8 +3,8 @@ package encoder
 import (
 	"context"
 	"encoding/json"
-	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/tasks-manager-master-service/responses"
-	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/tasks-manager-master-service/utils/appErrors"
+	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/responses"
+	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/utils/appErrors"
 	"net/http"
 )
 

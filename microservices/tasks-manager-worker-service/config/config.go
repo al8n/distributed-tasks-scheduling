@@ -1,9 +1,9 @@
 package config
 
 import (
-"encoding/json"
-"io/ioutil"
-"sync"
+	"encoding/json"
+	"io/ioutil"
+	"sync"
 )
 
 type Config struct {

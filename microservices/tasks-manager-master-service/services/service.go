@@ -1,8 +1,8 @@
 package services
 
 import (
-	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/entities"
-	mygrpctransport "github.com/ALiuGuanyan/distributed-task-scheduling/microservices/tasks-manager-master-service/grpc/transport"
+	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/entities"
+	mygrpctransport "github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/grpc/transport"
 	"sync"
 )
 

@@ -2,7 +2,7 @@ package responses
 
 import (
 	"encoding/json"
-	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/entities"
+	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/entities"
 )
 
 type Response struct {

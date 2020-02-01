@@ -3,7 +3,7 @@ package decoder
 import (
 	"context"
 	"encoding/json"
-	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/tasks-manager-master-service/requests"
+	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/requests"
 	"net/http"
 )
 

@@ -1,8 +1,8 @@
 package services
 
 import (
-	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/entities"
-	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/tasks-manager-master-service/repositories/distribution"
+	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/entities"
+	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/repositories/distribution"
 )
 
 func (svc *ImplService) SaveOneTask(task entities.Task) (oldTask *entities.Task, err error) {

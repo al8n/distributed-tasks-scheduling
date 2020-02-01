@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	myconfig "github.com/ALiuGuanyan/distributed-task-scheduling/microservices/tasks-manager-master-service/config"
-	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/tasks-manager-master-service/server"
+	myconfig "github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/config"
+	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/server"
 	"log"
 	"runtime"
 )

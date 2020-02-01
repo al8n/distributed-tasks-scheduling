@@ -1,7 +1,7 @@
 package endpoints
 
 import (
-	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/tasks-manager-master-service/services"
+	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/services"
 	"github.com/go-kit/kit/endpoint"
 	"sync"
 )

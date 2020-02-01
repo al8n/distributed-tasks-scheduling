@@ -3,7 +3,7 @@ package entities
 import (
 	"github.com/gorhill/cronexpr"
 	"encoding/json"
-	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/conf"
+	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/conf"
 	"strings"
 )
 
