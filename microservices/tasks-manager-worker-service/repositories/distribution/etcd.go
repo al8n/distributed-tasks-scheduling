@@ -5,13 +5,17 @@ import (
 	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/conf"
 	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/entities"
 	myconfig "github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-worker-service/config"
-	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-worker-service/repositories/distribution/scheduler"
 	"github.com/coreos/etcd/clientv3"
 	"github.com/coreos/etcd/mvcc/mvccpb"
 	"log"
 	"sync"
 	"time"
 )
+
+type etcd interface {
+	WatchTasks() (err error)
+	CreateTaskLock(taskName  string) (lock *Lock)
+}
 
 type EtcdDB struct {
 	client *clientv3.Client
@@ -38,9 +42,6 @@ func InitEtcd() (err error)  {
 	var (
 		config clientv3.Config
 		client *clientv3.Client
-		lease clientv3.Lease
-		kv clientv3.KV
-		watcher clientv3.Watcher
 	)
 
 	// 初始化配置
@@ -65,6 +66,9 @@ func InitEtcd() (err error)  {
 
 	// 赋值单例
 	newEtcdSingleton(etcd)
+
+	// 启动任务监听
+	SgtEtcd.WatchTasks()
 	return
 }
 
@@ -93,7 +97,7 @@ func (e *EtcdDB) WatchTasks() (err error) {
 
 			te = entities.BuildTaskEvent(entities.SAVE, task)
 			//同步给调度协程scheduler
-			scheduler.SgtScheduler.PublishTaskEvent(te)
+			SgtScheduler.PublishTaskEvent(te)
 		}
 	}
 
@@ -123,10 +127,15 @@ func (e *EtcdDB) WatchTasks() (err error) {
 				}
 
 				// 变化推送给scheduler
-				scheduler.SgtScheduler.PublishTaskEvent(te)
+				SgtScheduler.PublishTaskEvent(te)
 			}
 		}
 	}()
 	return
 }
 
+// 创建任务执行锁
+func (e *EtcdDB) CreateTaskLock(taskName  string) (lock *Lock) {
+	lock = InitTaskLock(taskName, e.kv, e.lease)
+	return
+}

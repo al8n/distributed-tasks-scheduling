@@ -4,7 +4,7 @@ import (
 	"context"
 	taskspb "github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/grpc/pb/tasks"
 	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/responses"
-	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/utils/appErrors"
+	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/utils"
 )
 
 func (gec *ImplEncoder) EncodeSaveOneTaskResponse(_ context.Context, response interface{}) (i interface{}, err error) {
@@ -12,7 +12,7 @@ func (gec *ImplEncoder) EncodeSaveOneTaskResponse(_ context.Context, response in
 	res, ok := response.(responses.Response)
 	if !ok {
 		pbrpl.ErrorNumber = -1
-		pbrpl.Msg = appErrors.EncoderAssertError.Error()
+		pbrpl.Msg = utils.EncoderAssertError.Error()
 		return pbrpl, nil
 	}
 	pbrpl.Msg = res.Message
@@ -25,7 +25,7 @@ func (gec *ImplEncoder) EncodeDeleteOneTaskResponse(_ context.Context, response 
 	res, ok := response.(responses.Response)
 	if !ok {
 		pbrpl.ErrorNumber = -1
-		pbrpl.Msg = appErrors.EncoderAssertError.Error()
+		pbrpl.Msg = utils.EncoderAssertError.Error()
 		return pbrpl, nil
 	}
 
@@ -42,7 +42,7 @@ func (gec *ImplEncoder) EncodeGetOneTaskResponse(_ context.Context, response int
 
 	if !ok {
 		pbrpl.ErrorNumber = -1
-		pbrpl.Msg = appErrors.EncoderAssertError.Error()
+		pbrpl.Msg = utils.EncoderAssertError.Error()
 		return pbrpl, nil
 	}
 
@@ -67,8 +67,8 @@ func (gec *ImplEncoder) EncodeGetAllTasksResponse(_ context.Context, response in
 	res, ok := response.(responses.GetAllTasksResponse)
 	if !ok {
 		pbrpl = &taskspb.GetAllTasksReply{
-			ErrorNumber:          -1,
-			Msg:                  appErrors.EncoderAssertError.Error(),
+			ErrorNumber: -1,
+			Msg:         utils.EncoderAssertError.Error(),
 		}
 		return
 	}
@@ -95,7 +95,7 @@ func (gec *ImplEncoder) EncodeKillOneTaskResponse(_ context.Context, response in
 	res, ok := response.(responses.Response)
 	if !ok {
 		pbrpl.ErrorNumber = -1
-		pbrpl.Msg = appErrors.EncoderAssertError.Error()
+		pbrpl.Msg = utils.EncoderAssertError.Error()
 		return pbrpl, nil
 	}
 	pbrpl.Msg = res.Message

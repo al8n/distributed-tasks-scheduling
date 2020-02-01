@@ -1,4 +1,4 @@
-package appErrors
+package utils
 
 import "errors"
 
@@ -9,4 +9,6 @@ var  (
 	EndpointAssertError = errors.New("Endport Assert Error")
 	DecoderAssertError = errors.New("Decoder Assert Error")
 	EncoderAssertError = errors.New("Encoder Assert Error")
+
+	LockOccupiedError = errors.New("Lock has been occupied.")
 )

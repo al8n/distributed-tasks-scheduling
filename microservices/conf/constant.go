@@ -8,7 +8,7 @@ const   (
 	TASK_KILLER_DIR = "/cron/killer/"
 
 	// 任务锁目录
-	JOB_LOCK_DIR = "/cron/lock/"
+	TASK_LOCK_DIR = "/cron/lock/"
 
 	// 服务注册目录
 	JOB_WORKER_DIR = "/cron/workers/"

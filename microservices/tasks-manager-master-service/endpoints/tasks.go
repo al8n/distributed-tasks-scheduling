@@ -5,7 +5,7 @@ import (
 	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/requests"
 	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/responses"
 	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/services"
-	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/utils/appErrors"
+	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/utils"
 	"github.com/go-kit/kit/endpoint"
 )
 
@@ -13,7 +13,7 @@ func (ep *ImplEndpoints) MakeSaveOneTaskEndPoint(svc services.Service) endpoint.
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req, ok := request.(requests.SaveOneTaskRequest)
 		if !ok {
-			return nil, appErrors.EndpointAssertError
+			return nil, utils.EndpointAssertError
 		}
 
 
@@ -36,7 +36,7 @@ func (ep *ImplEndpoints) MakeDeleteOneTaskEndPoint(svc services.Service) endpoin
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req, ok := request.(requests.DeleteOneTaskRequest)
 		if !ok {
-			return nil, appErrors.EndpointAssertError
+			return nil, utils.EndpointAssertError
 		}
 
 		oldTask, err := svc.DeleteOneTask(req.Name)
@@ -58,7 +58,7 @@ func (ep *ImplEndpoints) MakeGetOneTaskEndPoint(svc services.Service) endpoint.E
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req, ok := request.(requests.GetOneTaskRequest)
 		if !ok {
-			return nil, appErrors.EndpointAssertError
+			return nil, utils.EndpointAssertError
 		}
 
 		task, err := svc.GetOneTask(req.Name)
@@ -81,7 +81,7 @@ func (ep *ImplEndpoints) MakeGetAllTasksEndPoint(svc services.Service) endpoint.
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		_, ok := request.(requests.GetAllTasksRequest)
 		if !ok {
-			return nil, appErrors.EndpointAssertError
+			return nil, utils.EndpointAssertError
 		}
 
 		tasks, err := svc.GetAllTasks()
@@ -104,7 +104,7 @@ func (ep *ImplEndpoints) MakeKillOneTaskEndPoint(svc services.Service) endpoint.
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req, ok := request.(requests.KillOneTaskRequest)
 		if !ok {
-			return nil, appErrors.EncoderAssertError
+			return nil, utils.EncoderAssertError
 		}
 		err = svc.KillOneTask(req.Name)
 		if err != nil {

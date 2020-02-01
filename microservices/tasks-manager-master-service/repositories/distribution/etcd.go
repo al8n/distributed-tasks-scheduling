@@ -1,8 +1,8 @@
 package distribution
 
 import (
-	"github.com/ALiuGuanyan/distributed-task-scheduling/microservices/entities"
-	myconfig "github.com/ALiuGuanyan/distributed-task-scheduling/microservices/tasks-manager-master-service/config"
+	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/entities"
+	myconfig "github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/config"
 	"github.com/coreos/etcd/clientv3"
 	"sync"
 	"time"
