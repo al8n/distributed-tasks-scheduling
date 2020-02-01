@@ -4,6 +4,7 @@ import (
 	"flag"
 	myconfig "github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-worker-service/config"
 	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-worker-service/repositories/distribution"
+	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-worker-service/repositories/distribution/scheduler"
 	"log"
 	"runtime"
 )
@@ -41,10 +42,14 @@ func main()  {
 		log.Println(err)
 	}
 
+	if err = scheduler.InitScheduler(); err != nil {
+		log.Println(err)
+	}
 
 	if err = distribution.InitEtcd(); err != nil {
 		return
 	}
+
 
 
 }

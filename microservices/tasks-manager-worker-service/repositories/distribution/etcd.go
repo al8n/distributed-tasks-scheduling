@@ -5,6 +5,7 @@ import (
 	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/conf"
 	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/entities"
 	myconfig "github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-worker-service/config"
+	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-worker-service/repositories/distribution/scheduler"
 	"github.com/coreos/etcd/clientv3"
 	"github.com/coreos/etcd/mvcc/mvccpb"
 	"log"
@@ -91,7 +92,8 @@ func (e *EtcdDB) WatchTasks() (err error) {
 		if task, err = entities.UnMarshallTask(kvpair.Value); err == nil {
 
 			te = entities.BuildTaskEvent(entities.SAVE, task)
-			//TODO:把这个task同步给调度协程scheduler
+			//同步给调度协程scheduler
+			scheduler.SgtScheduler.PublishTaskEvent(te)
 		}
 	}
 
@@ -120,7 +122,8 @@ func (e *EtcdDB) WatchTasks() (err error) {
 					te = entities.BuildTaskEvent(entities.DELETE, task)
 				}
 
-				// TODO: 推送给scheduler
+				// 变化推送给scheduler
+				scheduler.SgtScheduler.PublishTaskEvent(te)
 			}
 		}
 	}()
