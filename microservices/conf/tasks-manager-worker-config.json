@@ -1,5 +1,19 @@
 {
-  "etcd_endpoints": ["127.0.0.1:12379"],
+  "etcd_endpoints": ["task-etcd:2379"],
   "etcd_timeout": 5000,
-  "task_event_capacity": 1000
+  "etcd_lock_rand_time": 1000,
+  "task_event_capacity": 1000,
+
+  "mongo_endpoint": "mongodb://mongo-log:27017",
+  "mongo_timeout": 5000,
+  "mongo_database": "cron",
+  "mongo_collection": "records",
+
+  "log_batch_size": 100,
+  "log_commit_timeout": 1000,
+  "log_chan_size": 1000,
+  "log_commit_chan_size": 1000,
+
+  "shell_command": "sh"
+
 }

@@ -2,6 +2,8 @@ package distribution
 
 import (
 	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/entities"
+	myconfig "github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-worker-service/config"
+	"math/rand"
 	"os/exec"
 	"sync"
 	"time"
@@ -50,6 +52,9 @@ func (e *Executor) ExecuteTask(info *entities.TaskExecuteInfo)  {
 		// 记录任务开始时间
 		rst.StartTime = time.Now()
 
+		// 上锁
+		// 随机睡眠
+		time.Sleep(time.Duration(rand.Intn(myconfig.ConfigSingleton.EtcdLockRandTime)) * time.Millisecond)
 		err = lock.TryLock()
 		// 释放锁
 		defer lock.UnLock()
@@ -62,7 +67,7 @@ func (e *Executor) ExecuteTask(info *entities.TaskExecuteInfo)  {
 			rst.StartTime = time.Now()
 
 			// 执行shell命令
-			cmd = exec.CommandContext(info.Context, "/bin/bash", "-c", info.Task.Command)
+			cmd = exec.CommandContext(info.Context, myconfig.ConfigSingleton.ShellCommand, "-c", info.Task.Command)
 
 			// 执行并捕获输出
 			output, err = cmd.CombinedOutput()

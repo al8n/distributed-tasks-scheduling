@@ -12,6 +12,8 @@ type HTTPDecoder interface {
 	DecodeKillOneTaskRequest(_ context.Context, r *http.Request) (interface{}, error)
 	DecodeGetOneTaskRequest(_ context.Context, r *http.Request) (interface{}, error)
 	DecodeGetAllTasksRequest(_ context.Context, r *http.Request) (interface{}, error)
+
+	DecodeGetLogsRequest(_ context.Context, r *http.Request) (interface{}, error)
 }
 
 type ImplDecoder struct {}

@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func (mw *ImplInstrumentation) TaskInstrumentationMiddleware(protocol, method string) endpoint.Middleware  {
+func (mw *ImplInstrumentation) InstrumentationMiddleware(protocol, method string) endpoint.Middleware  {
 	return func(next endpoint.Endpoint) endpoint.Endpoint {
 		return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 			defer func(begin time.Time) {

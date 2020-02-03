@@ -1,9 +1,9 @@
 package distribution
 
 import (
-	"fmt"
 	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/entities"
 	myconfig "github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-worker-service/config"
+	myutils "github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/utils"
 	"sync"
 	"time"
 )
@@ -69,7 +69,9 @@ func (s *Scheduler) ScheduleLoop()  {
 		case taskEvent = <- s.taskEventChan: // 监听任务变化事件
 			//对内存中维护的任务列表做增删改查
 			s.HandleTaskEvent(taskEvent)
+
 		case <-  scheduleTimer.C: // 最近的任务到期了
+
 		case taskResult = <- s.taskResultChan: // 监听任务执行结果
 			s.HandleTaskResult(taskResult)
 		}
@@ -139,7 +141,10 @@ func (s *Scheduler) HandleTaskEvent(te *entities.TaskEvent)  {
 		}
 	case entities.KILL:
 		// 取消掉command执行
-		if  tei, isTaskExecuting = s.taskExcutingTable[te.Task.Name]; isTaskExecuting {
+		tei, isTaskExecuting = s.taskExcutingTable[te.Task.Name]
+
+		if  isTaskExecuting {
+
 			tei.CancelFunc() // 触发command杀死shell子进程 任务得到退出
 		}
 	}
@@ -166,12 +171,10 @@ func (s *Scheduler) TryStartTask(tsp *entities.TaskSchedulePlan)  {
 
 	// 构建执行状态信息
 	tei = entities.BuildTaskExecuteInfo(tsp)
-
 	// 保存执行状态
 	s.taskExcutingTable[tsp.Task.Name] = tei
 
 	// 执行任务
-	fmt.Println("执行任务", tei.Task.Name, tei.PlanTime, tei.RealTime)
 	SgtExecutor.ExecuteTask(tei)
 
 }
@@ -186,5 +189,28 @@ func (s *Scheduler) HandleTaskResult(rst *entities.TaskExecuteResult)  {
 	// 删除执行状态
 	delete(s.taskExcutingTable, rst.ExecuteInfo.Task.Name)
 
-	fmt.Println("任务执行完成", rst.ExecuteInfo.Task.Name, string(rst.Output), rst.Err)
+	var (
+		taskLog *entities.TaskLog
+	)
+	// 生成执行日志
+	if rst.Err != myutils.LockOccupiedError {
+		taskLog = &entities.TaskLog{
+			TaskName: rst.ExecuteInfo.Task.Name,
+			Command: rst.ExecuteInfo.Task.Command,
+			Output: string(rst.Output),
+			PlanTime: rst.ExecuteInfo.PlanTime.UnixNano() / 1000 / 1000,
+			ScheduleTime: rst.ExecuteInfo.RealTime.UnixNano() / 1000/1000,
+			StartTime: rst.StartTime.UnixNano() / 1000 /1000,
+			EndTime: rst.EndTime.UnixNano() / 1000 / 1000,
+		}
+
+		if rst.Err != nil {
+			taskLog.Error = rst.Err.Error()
+		} else {
+			taskLog.Error = ""
+		}
+
+		//存到MongoDB
+		SgtSink.Append(taskLog)
+	}
 }

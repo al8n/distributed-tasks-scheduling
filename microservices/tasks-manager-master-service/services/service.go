@@ -2,7 +2,7 @@ package services
 
 import (
 	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/entities"
-	mygrpctransport "github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/grpc/transport"
+	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/requests"
 	"sync"
 )
 
@@ -12,12 +12,11 @@ type Service interface {
 	KillOneTask(name string) ( err error)
 	GetOneTask(name string) (*entities.Task, error)
 	GetAllTasks() ([]*entities.Task, error)
+
+	GetLogs(req requests.GetLogsRequest) ([]*entities.TaskLog, error)
 }
 
-type ImplService struct {
-	//instrumentation.Instrumentation
-	tp mygrpctransport.ImplTasksTransport
-}
+type ImplService struct {}
 
 var (
 	SgtService *ImplService

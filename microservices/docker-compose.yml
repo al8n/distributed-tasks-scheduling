@@ -2,10 +2,13 @@ version: "3"
 services:
   mongo:
     image: "mongo"
+    container_name: "mongo-log"
     networks:
       - microservice
     volumes:
       - task-mongo-data:/data/db
+    ports:
+      - "27017:27017"
 
   etcd:
     image: "bitnami/etcd"
@@ -19,21 +22,37 @@ services:
       - ALLOW_NONE_AUTHENTICATION=yes
       - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
 
+  worker-microservice:
+    build:
+      context: .
+      dockerfile: tasks-manager-worker-service/Dockerfile
+    container_name: "worker-microservice"
+    networks:
+      - microservice
+    depends_on:
+      - mongo
 
-  #  user-api:
-  #    image: "user-service"
-  #    container_name: "user-apis"
-  #    ports:
-  #      - "10010:10010"
-  #      - "50051:50051"
-  #    networks:
-  #      - user_microservice
-  #    depends_on:
-  #      - user-cache-redis
-  #      - user-neo4j-db
-  #    volumes:
-  #      - $GOPATH:/share
-  #    command: sh
+    volumes:
+      - /Users/Al/Development/golang/src/github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-worker-service/main:/app/main:ro
+      - /Users/Al/Development/golang/src/github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/conf/tasks-manager-worker-config.json:/app/config:ro
+
+
+  master-microservice:
+    build:
+      context: .
+      dockerfile: tasks-manager-master-service/Dockerfile
+    container_name: "master-microservice"
+    ports:
+      - "10010:8080"
+      - "50051:50051"
+    networks:
+      - microservice
+    depends_on:
+      - mongo
+
+    volumes:
+      - /Users/Al/Development/golang/src/github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/main:/app/main:ro
+      - /Users/Al/Development/golang/src/github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/conf/tasks-manager-master-config.json:/app/config:ro
 
   cadvisor:
     image: "gcr.io/google-containers/cadvisor"
@@ -56,7 +75,7 @@ services:
     networks:
       - microservice
     volumes:
-      - /Users/Al/Development/golang/src/github.com/ALiuGuanyan/distributed-task-scheduling/microservices/conf/prometheus.yml:/etc/prometheus/prometheus.yml
+      - /Users/Al/Development/golang/src/github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/conf/prometheus.yml:/etc/prometheus/prometheus.yml
     depends_on:
       - cadvisor
       - grafana
@@ -83,11 +102,13 @@ services:
   grpcui:
     image: "wongnai/grpcui"
     environment:
-      - GRPCUI_SERVER=userservice:50051
+      - GRPCUI_SERVER=master-microservice:50051
     ports:
       - "10012:8080"
     networks:
       - microservice
+    depends_on:
+      - master-microservice
 
 networks:
   microservice:

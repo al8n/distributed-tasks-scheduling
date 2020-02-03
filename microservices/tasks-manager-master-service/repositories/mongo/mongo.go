@@ -2,15 +2,17 @@ package mongo
 
 import (
 	"context"
+	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/entities"
 	myconfig "github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/config"
+	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/requests"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"sync"
 	"time"
 )
 
-type LogDBInterface interface {
-
+type logs interface {
+	GetLogs(req requests.GetLogsRequest) (logs []*entities.TaskLog, err error)
 }
 
 type LogDB struct {
@@ -19,19 +21,19 @@ type LogDB struct {
 }
 
 var (
-	LogSingleton *LogDB
+	SgtLogDB *LogDB
 	once      sync.Once
 )
 
 func newMongoDB(client *mongo.Client, collection *mongo.Collection) *LogDB {
 	once.Do(func() {
-		LogSingleton = &LogDB{
+		SgtLogDB = &LogDB{
 			client:        client,
 			logCollection: collection,
 		}
 	})
 
-	return LogSingleton
+	return SgtLogDB
 }
 
 func InitMongo() (err error)  {

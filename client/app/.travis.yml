@@ -1,0 +1,15 @@
+language: dart
+os: osx
+
+install:
+  - git clone https://github.com/flutter/flutter.git -b dev --depth 1
+  - export PATH=./flutter/bin:$PATH
+  - flutter doctor
+  - flutter --version
+script:
+  - flutter packages get
+  - flutter analyze --no-pub --no-current-package lib/ test/
+  - flutter test --no-pub test/
+cache:
+  directories:
+    - $HOME/.pub-cache

@@ -18,6 +18,7 @@ func (ec *ImplEncoder) EncodeKillOneTaskResponse(_ context.Context, w http.Respo
 
 	str, err := json.Marshal(res)
 	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
 		return err
 	}
 	w.WriteHeader(http.StatusOK)

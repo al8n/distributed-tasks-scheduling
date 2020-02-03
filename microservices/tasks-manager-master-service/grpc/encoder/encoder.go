@@ -11,6 +11,8 @@ type GRPCEncoder interface {
 	EncodeKillOneTaskResponse(_ context.Context, response interface{}) (interface{}, error)
 	EncodeGetOneTaskResponse(_ context.Context, response interface{}) (interface{}, error)
 	EncodeGetAllTasksResponse(_ context.Context, response interface{}) (interface{}, error)
+
+	EncodeGetLogsResponse(_ context.Context, response interface{}) (interface{}, error)
 }
 
 type ImplEncoder struct {}

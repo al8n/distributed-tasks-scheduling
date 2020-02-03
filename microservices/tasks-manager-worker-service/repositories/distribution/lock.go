@@ -5,7 +5,6 @@ import (
 	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/conf"
 	myutils "github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/utils"
 	"github.com/coreos/etcd/clientv3"
-	"log"
 )
 
 type lock interface {
@@ -79,10 +78,11 @@ func (l *Lock) TryLock() (err error) {
 			select {
 			case keepResp = <- keepRespChan: // 自动续租的应答
 				if keepResp == nil {
-					break
+					goto END
 				}
 			}
 		}
+		END:
 	}()
 
 	// 3. 创建事务
@@ -106,7 +106,6 @@ func (l *Lock) TryLock() (err error) {
 	}
 
 	// 抢锁成功
-	log.Println("successful\n")
 	l.leaseID = leaseID
 	l.cancelFunc = cancelFunc
 	l.isLocked = true

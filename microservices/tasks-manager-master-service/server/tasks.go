@@ -5,7 +5,7 @@ import (
 	grpcdecoder "github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/grpc/decoder"
 	grpcencoder "github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/grpc/encoder"
 	taskspb "github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/grpc/pb/tasks"
-	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/grpc/transport"
+	taskstransport "github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/grpc/transport/tasks_transport"
 	httpdecoder "github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/http/decoder"
 	httpencoder "github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/http/encoder"
 	"github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-master-service/middleware/instrumentation"
@@ -22,40 +22,40 @@ func (s *Server) TasksRoutes(f func(string) string)  {
 	{
 		var method = "SaveOneTask"
 		saveOneTaskEndpoint = endpoints.SgtEndpoints.MakeSaveOneTaskEndPoint(s.svc)
-		saveOneTaskEndpoint = instrumentation.SgtInstrumentation.TaskInstrumentationMiddleware(protol,method)(saveOneTaskEndpoint)
-		saveOneTaskEndpoint = logging.SgtLogging.TaskLoggingMiddleware(protol, method)(saveOneTaskEndpoint)
+		saveOneTaskEndpoint = instrumentation.SgtInstrumentation.InstrumentationMiddleware(protol,method)(saveOneTaskEndpoint)
+		saveOneTaskEndpoint = logging.SgtLogging.LogMiddleware(protol, method)(saveOneTaskEndpoint)
 	}
 
 	var deleteOneTaskEndpoint endpoint.Endpoint
 	{
 		var method = "DeleteOneTask"
 		deleteOneTaskEndpoint = endpoints.SgtEndpoints.MakeDeleteOneTaskEndPoint(s.svc)
-		deleteOneTaskEndpoint = instrumentation.SgtInstrumentation.TaskInstrumentationMiddleware(protol, method)(deleteOneTaskEndpoint)
-		deleteOneTaskEndpoint = logging.SgtLogging.TaskLoggingMiddleware(protol, method)(deleteOneTaskEndpoint)
+		deleteOneTaskEndpoint = instrumentation.SgtInstrumentation.InstrumentationMiddleware(protol, method)(deleteOneTaskEndpoint)
+		deleteOneTaskEndpoint = logging.SgtLogging.LogMiddleware(protol, method)(deleteOneTaskEndpoint)
 	}
 
 	var getOneTaskEndpoint endpoint.Endpoint
 	{
 		var method = "GetOneTask"
 		getOneTaskEndpoint = endpoints.SgtEndpoints.MakeGetOneTaskEndPoint(s.svc)
-		getOneTaskEndpoint = instrumentation.SgtInstrumentation.TaskInstrumentationMiddleware(protol, method)(getOneTaskEndpoint)
-		getOneTaskEndpoint = logging.SgtLogging.TaskLoggingMiddleware(protol, method)(getOneTaskEndpoint)
+		getOneTaskEndpoint = instrumentation.SgtInstrumentation.InstrumentationMiddleware(protol, method)(getOneTaskEndpoint)
+		getOneTaskEndpoint = logging.SgtLogging.LogMiddleware(protol, method)(getOneTaskEndpoint)
 	}
 
 	var getAllTasksEndpoint endpoint.Endpoint
 	{
 		var method = "GetAllTasks"
 		getAllTasksEndpoint = endpoints.SgtEndpoints.MakeGetAllTasksEndPoint(s.svc)
-		getAllTasksEndpoint = instrumentation.SgtInstrumentation.TaskInstrumentationMiddleware(protol, method)(getAllTasksEndpoint)
-		getAllTasksEndpoint = logging.SgtLogging.TaskLoggingMiddleware(protol, method)(getAllTasksEndpoint)
+		getAllTasksEndpoint = instrumentation.SgtInstrumentation.InstrumentationMiddleware(protol, method)(getAllTasksEndpoint)
+		getAllTasksEndpoint = logging.SgtLogging.LogMiddleware(protol, method)(getAllTasksEndpoint)
 	}
 
 	var killOneTaskEndpoint endpoint.Endpoint
 	{
 		var method = "KillOneTask"
 		killOneTaskEndpoint = endpoints.SgtEndpoints.MakeKillOneTaskEndPoint(s.svc)
-		killOneTaskEndpoint = instrumentation.SgtInstrumentation.TaskInstrumentationMiddleware(protol, method)(killOneTaskEndpoint)
-		killOneTaskEndpoint = logging.SgtLogging.TaskLoggingMiddleware(protol, method)(killOneTaskEndpoint)
+		killOneTaskEndpoint = instrumentation.SgtInstrumentation.InstrumentationMiddleware(protol, method)(killOneTaskEndpoint)
+		killOneTaskEndpoint = logging.SgtLogging.LogMiddleware(protol, method)(killOneTaskEndpoint)
 	}
 
 	s.router.Methods("POST").Path(f("/task/save/one")).Handler(
@@ -106,42 +106,43 @@ func (s *Server) TasksGrpcRoutes() {
 	{
 		var method = "SaveOneTask"
 		saveOneTaskEndpoint = endpoints.SgtEndpoints.MakeSaveOneTaskEndPoint(s.svc)
-		saveOneTaskEndpoint = instrumentation.SgtInstrumentation.TaskInstrumentationMiddleware(protol,method)(saveOneTaskEndpoint)
-		saveOneTaskEndpoint = logging.SgtLogging.TaskLoggingMiddleware(protol, method)(saveOneTaskEndpoint)
+		saveOneTaskEndpoint = instrumentation.SgtInstrumentation.InstrumentationMiddleware(protol,method)(saveOneTaskEndpoint)
+		saveOneTaskEndpoint = logging.SgtLogging.LogMiddleware(protol, method)(saveOneTaskEndpoint)
 	}
 
 	var deleteOneTaskEndpoint endpoint.Endpoint
 	{
 		var method = "DeleteOneTask"
 		deleteOneTaskEndpoint = endpoints.SgtEndpoints.MakeDeleteOneTaskEndPoint(s.svc)
-		deleteOneTaskEndpoint = instrumentation.SgtInstrumentation.TaskInstrumentationMiddleware(protol, method)(deleteOneTaskEndpoint)
-		deleteOneTaskEndpoint = logging.SgtLogging.TaskLoggingMiddleware(protol, method)(deleteOneTaskEndpoint)
+		deleteOneTaskEndpoint = instrumentation.SgtInstrumentation.InstrumentationMiddleware(protol, method)(deleteOneTaskEndpoint)
+		deleteOneTaskEndpoint = logging.SgtLogging.LogMiddleware(protol, method)(deleteOneTaskEndpoint)
 	}
 
 	var getOneTaskEndpoint endpoint.Endpoint
 	{
 		var method = "GetOneTask"
 		getOneTaskEndpoint = endpoints.SgtEndpoints.MakeGetOneTaskEndPoint(s.svc)
-		getOneTaskEndpoint = instrumentation.SgtInstrumentation.TaskInstrumentationMiddleware(protol, method)(getOneTaskEndpoint)
-		getOneTaskEndpoint = logging.SgtLogging.TaskLoggingMiddleware(protol, method)(getOneTaskEndpoint)
+		getOneTaskEndpoint = instrumentation.SgtInstrumentation.InstrumentationMiddleware(protol, method)(getOneTaskEndpoint)
+		getOneTaskEndpoint = logging.SgtLogging.LogMiddleware(protol, method)(getOneTaskEndpoint)
 	}
 
 	var getAllTasksEndpoint endpoint.Endpoint
 	{
 		var method = "GetAllTasks"
 		getAllTasksEndpoint = endpoints.SgtEndpoints.MakeGetAllTasksEndPoint(s.svc)
-		getAllTasksEndpoint = instrumentation.SgtInstrumentation.TaskInstrumentationMiddleware(protol, method)(getAllTasksEndpoint)
-		getAllTasksEndpoint = logging.SgtLogging.TaskLoggingMiddleware(protol, method)(getAllTasksEndpoint)
+		getAllTasksEndpoint = instrumentation.SgtInstrumentation.InstrumentationMiddleware(protol, method)(getAllTasksEndpoint)
+		getAllTasksEndpoint = logging.SgtLogging.LogMiddleware(protol, method)(getAllTasksEndpoint)
 	}
 
 	var killOneTaskEndpoint endpoint.Endpoint
 	{
 		var method = "KillOneTask"
 		killOneTaskEndpoint = endpoints.SgtEndpoints.MakeKillOneTaskEndPoint(s.svc)
-		killOneTaskEndpoint = instrumentation.SgtInstrumentation.TaskInstrumentationMiddleware(protol, method)(killOneTaskEndpoint)
-		killOneTaskEndpoint = logging.SgtLogging.TaskLoggingMiddleware(protol, method)(killOneTaskEndpoint)
+		killOneTaskEndpoint = instrumentation.SgtInstrumentation.InstrumentationMiddleware(protol, method)(killOneTaskEndpoint)
+		killOneTaskEndpoint = logging.SgtLogging.LogMiddleware(protol, method)(killOneTaskEndpoint)
 	}
-	s.gtp = &transport.ImplTasksTransport{
+
+	s.gtp.Tasks =  &taskstransport.TasksTransport{
 		SaveOneTaskHandler:   grpctransport.NewServer(
 			saveOneTaskEndpoint,
 			grpcdecoder.SgtGRPCDecoder.DecodeSaveOneTaskRequest,
@@ -169,6 +170,8 @@ func (s *Server) TasksGrpcRoutes() {
 		),
 	}
 
-	taskspb.RegisterTasksServer(s.gsrv, s.gtp)
+
+
+	taskspb.RegisterTasksServer(s.gsrv, s.gtp.Tasks)
 
 }

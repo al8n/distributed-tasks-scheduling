@@ -151,18 +151,18 @@ func (e *EtcdDB) KillTask(name string) (err error)  {
 		killerKey string
 		leaseGrantResp *clientv3.LeaseGrantResponse
 		leaseId clientv3.LeaseID
-		ctx context.Context
-		cancelFunc context.CancelFunc
+		//ctx context.Context
+		//cancelFunc context.CancelFunc
 	)
 
 	// 通知worker杀死对应任务
 	killerKey = conf.TASK_KILLER_DIR + name
 
-	ctx, cancelFunc = context.WithTimeout(context.Background(), time.Duration(myconfig.ConfigSingleton.EtcdTimeout) * time.Millisecond)
-	defer cancelFunc()
+	//ctx, cancelFunc = context.WithTimeout(context.Background(), time.Duration(myconfig.ConfigSingleton.EtcdTimeout) * time.Millisecond)
+	//defer cancelFunc()
 
 	// 让worker监听到一次put操作, 创建一个租约让其稍后自动过期即可
-	if leaseGrantResp, err = e.lease.Grant(ctx, 1); err != nil {
+	if leaseGrantResp, err = e.lease.Grant(context.TODO(), 1); err != nil {
 		return
 	}
 

@@ -8,7 +8,7 @@ import (
 )
 
 type LoggingMiddleware interface {
-	TaskLoggingMiddleware(protocol, method string) endpoint.Middleware
+	LogMiddleware(protocol, method string) endpoint.Middleware
 }
 
 type ImplLoggingMiddleware struct {

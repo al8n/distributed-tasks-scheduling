@@ -17,7 +17,7 @@ var (
 func initArgs() {
 	// master -config ./master.json -xxx 123 -yyy ddd
 	// master -h
-	flag.StringVar(&confFile, "config", "../conf/tasks-manager-worker-config.json", "please specify config file")
+	flag.StringVar(&confFile, "config", "./config.json", "please specify config file")
 	flag.Parse()
 }
 
@@ -41,6 +41,9 @@ func main()  {
 	if err = myconfig.InitConfig(confFile); err != nil {
 		log.Println(err)
 	}
+
+	// 启动日志协程
+	distribution.InitSink()
 
 	// 初始化执行器
 	distribution.InitExecutor()

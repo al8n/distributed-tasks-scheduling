@@ -12,6 +12,8 @@ type HTTPEncoder interface {
 	EncodeKillOneTaskResponse(_ context.Context, w http.ResponseWriter, response interface{}) error
 	EncodeGetOneTaskResponse(_ context.Context, w http.ResponseWriter, response interface{}) error
 	EncodeGetAllTasksResponse(_ context.Context, w http.ResponseWriter, response interface{}) error
+
+	EncodeGetLogsResponse(_ context.Context, w http.ResponseWriter, response interface{}) error
 }
 
 type ImplEncoder struct {}

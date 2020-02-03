@@ -31,6 +31,10 @@ func ExtractTaskName(key string) string  {
 	return strings.TrimPrefix(key, conf.TASK_SAVE_DIR)
 }
 
+// 从etcd的key中提取任务名
+func ExtractKillerName(key string) string  {
+	return strings.TrimPrefix(key, conf.TASK_KILLER_DIR)
+}
 
 
 

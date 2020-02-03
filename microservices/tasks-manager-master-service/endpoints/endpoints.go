@@ -7,11 +7,15 @@ import (
 )
 
 type Endpoints interface {
+	// etcd
 	MakeSaveOneTaskEndPoint(svc services.Service) endpoint.Endpoint
 	MakeDeleteOneTaskEndPoint(svc services.Service) endpoint.Endpoint
 	MakeKillOneTaskEndPoint(svc services.Service) endpoint.Endpoint
 	MakeGetOneTaskEndPoint(svc services.Service) endpoint.Endpoint
 	MakeGetAllTasksEndPoint(svc services.Service) endpoint.Endpoint
+
+	// mongodb
+	MakeGetAllLogsEndpoint(svc services.Service) endpoint.Endpoint
 }
 
 type ImplEndpoints struct {

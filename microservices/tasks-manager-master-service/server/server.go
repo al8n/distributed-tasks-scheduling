@@ -30,7 +30,7 @@ type Server struct {
 	svc    *services.ImplService
 	srv	*http.Server
 	gsrv   *grpc.Server
-	gtp *mygrpctransport.ImplTasksTransport
+	gtp *mygrpctransport.Transport
 }
 
 var (
@@ -59,6 +59,7 @@ func newServerSingleton() *Server  {
 				WriteTimeout: time.Duration(myconfig.ConfigSingleton.HTTPWriteTimeout) * time.Millisecond ,
 				ReadTimeout: time.Duration(myconfig.ConfigSingleton.HTTPReadTimeout) * time.Millisecond ,
 			},
+			gtp: &mygrpctransport.Transport{},
 		}
 	})
 	return SgtServer
@@ -102,6 +103,8 @@ func InitServer () (err error) {
 	srv.router.Handle("/metrics", promhttp.Handler())
 	srv.TasksGrpcRoutes()
 	srv.TasksRoutes(v1)
+	srv.LogsGrpcRoutes()
+	srv.LogsRoutes(v1)
 	reflection.Register(SgtServer.gsrv)
 
 

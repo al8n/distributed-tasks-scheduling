@@ -9,7 +9,7 @@ import (
 )
 
 type Instrumentation interface {
-	TaskInstrumentationMiddleware(protocol, method string) endpoint.Middleware
+	InstrumentationMiddleware(protocol, method string) endpoint.Middleware
 }
 
 type ImplInstrumentation struct {

@@ -16,6 +16,7 @@ type Config struct {
 	EtcdEndpoints []string `json:"etcd_endpoints"`
 	EtcdTimeout int `json:"etcd_timeout"`
 
+
 	MongoEndpoint string `json:"mongo_endpoint"`
 	MongoDatabase string `json:"mongo_database"`
 	MongoCollection string `json:"mongo_collection"`

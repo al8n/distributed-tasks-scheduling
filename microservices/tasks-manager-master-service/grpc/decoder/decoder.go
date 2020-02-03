@@ -11,6 +11,9 @@ type GRPCDecoder interface {
 	DecodeGetAllTasksRequest(ctx context.Context, grpcReq interface{}) (interface{}, error)
 	DecodeGetOneTaskRequest(ctx context.Context, grpcReq interface{}) (interface{}, error)
 	DecodeKillOneTaskRequest(ctx context.Context, grpcReq interface{}) (interface{}, error)
+
+
+	DecodeLogsRequest(ctx context.Context, grpcReq interface{}) (interface{}, error)
 }
 
 type ImplDecoder struct {}

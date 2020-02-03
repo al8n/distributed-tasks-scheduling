@@ -1,39 +1,38 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
-	"sync"
 )
 
-type shape interface {
-	Diameter()
-	Area(v int)
+type TestStruct struct {
+	BoolVar      bool        `json:"bool_var,omitempty"`
+	IntVar       int         `json:"int_var,omitempty"`
+	StringVar    string      `json:"string_var,omitempty"`
+	InterfaceVar interface{} `json:"interface,omitempty"`
 }
 
-type ImplShape struct {
-	pie float32
-}
+func main() {
+	InterfaceVarIsInt := TestStruct{
+		BoolVar:      false,
+		InterfaceVar: 0,
+	}
+	res, _ := json.Marshal(InterfaceVarIsInt)
+	fmt.Println(string(res))
 
-var (
-	singleton *ImplShape
-	once sync.Once
-)
+	var test TestStruct
 
-func InitSingleton() *ImplShape {
-	once.Do(func() {
-		singleton = &ImplShape{pie: 3.14}
-	})
-	return singleton
-}
+	err := json.Unmarshal(res, &test)
+	if err != nil {
 
-func (i *ImplShape) Area(v int)  {
-	fmt.Println(i.pie * float32(v))
-}
-
-
-
-func main()  {
-	InitSingleton()
-	//o := &ImplShape{}
-	singleton.Area(20)
+	}
+	fmt.Println(test.IntVar == 0)
+	//InterfaceVarIsBool := TestStruct{
+	//	BoolVar:      false,
+	//	IntVar:       0,
+	//	InterfaceVar: false,
+	//	StringVar: "",
+	//}
+	//res, _ = json.Marshal(InterfaceVarIsBool)
+	//fmt.Println(string(res))
 }
