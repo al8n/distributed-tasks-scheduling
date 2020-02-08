@@ -1,0 +1,4 @@
+enum PlocStatus {
+  idle,
+  busy,
+}

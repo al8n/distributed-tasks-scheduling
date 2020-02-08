@@ -11,4 +11,6 @@ var  (
 	EncoderAssertError = errors.New("Encoder Assert Error")
 
 	LockOccupiedError = errors.New("Lock has been occupied.")
+
+	ErrorNoLocalIPFound = errors.New("Physical net not found")
 )

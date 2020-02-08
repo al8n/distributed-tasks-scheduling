@@ -43,7 +43,7 @@ const (
 	HTTP_PROTOCOL = "HTTP"
 )
 
-func newServerSingleton() *Server  {
+func InitServerSingleton() *Server  {
 	once.Do(func() {
 		r := mux.NewRouter()
 		g := grpc.NewServer()
@@ -65,6 +65,17 @@ func newServerSingleton() *Server  {
 	return SgtServer
 }
 
+func init()  {
+	endpoints.InitEndpoints()
+	instrumentation.InitInstrumentationMiddleware()
+	logging.InitLoggingMiddleware()
+	grpcdecoder.InitGRPCDecoder()
+	grpcencoder.InitGRPCEncoder()
+	httpdecoder.InitHTTPDecoder()
+	httpencoder.InitHTTPEncoder()
+
+}
+
 func v1(suffix string) string   {
 	return "/api/v1" + suffix
 }
@@ -80,25 +91,9 @@ func InitServer () (err error) {
 		log.Println(err)
 	}
 
+	srv := InitServerSingleton()
 
 
-	endpoints.InitEndpoints()
-	instrumentation.InitInstrumentationMiddleware()
-	logging.InitLoggingMiddleware()
-	grpcdecoder.InitGRPCDecoder()
-	grpcencoder.InitGRPCEncoder()
-	httpdecoder.InitHTTPDecoder()
-	httpencoder.InitHTTPEncoder()
-
-
-	srv := newServerSingleton()
-
-	gln, err := net.Listen("tcp", ":" + strconv.Itoa(myconfig.ConfigSingleton.GRPCPort))
-	if err != nil {
-		return
-	}
-
-	defer gln.Close()
 
 	srv.router.Handle("/metrics", promhttp.Handler())
 	srv.TasksGrpcRoutes()
@@ -107,18 +102,20 @@ func InitServer () (err error) {
 	srv.LogsRoutes(v1)
 	reflection.Register(SgtServer.gsrv)
 
-
 	go func() {
+		gln, err := net.Listen("tcp", ":" + strconv.Itoa(myconfig.ConfigSingleton.GRPCPort))
+		if err != nil {
+			log.Fatal("cannot listen: %v", err)
+			return
+		}
+
+		defer gln.Close()
+
 		log.Fatal(srv.gsrv.Serve(gln))
 	}()
 
-	httpserver := &http.Server{
-		Handler: srv.router,
-		Addr: ":"+strconv.Itoa(myconfig.ConfigSingleton.HTTPPort),
-		WriteTimeout: time.Duration(myconfig.ConfigSingleton.HTTPWriteTimeout),
-		ReadTimeout: time.Duration(myconfig.ConfigSingleton.HTTPReadTimeout),
-	}
+	log.Fatal(srv.srv.ListenAndServe())
 
-	log.Fatal(httpserver.ListenAndServe())
 	return
 }
+

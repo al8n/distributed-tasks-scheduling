@@ -10,7 +10,7 @@ type Config struct {
 	HTTPPort int `json:"http_port"`
 	HTTPReadTimeout int `json:"http_read_time_out"`
 	HTTPWriteTimeout int `json:"http_write_time_out"`
-
+	HTTPMaxClients int `json:"http_max_clients"`
 	GRPCPort int `json:"grpc_port"`
 
 	EtcdEndpoints []string `json:"etcd_endpoints"`

@@ -42,6 +42,10 @@ func main()  {
 		log.Println(err)
 	}
 
+	// 服务注册
+	distribution.InitRegister()
+
+
 	// 启动日志协程
 	distribution.InitSink()
 

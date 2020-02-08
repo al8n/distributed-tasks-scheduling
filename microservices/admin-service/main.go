@@ -1,38 +1,59 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
+	"math/rand"
+	"time"
 )
 
-type TestStruct struct {
-	BoolVar      bool        `json:"bool_var,omitempty"`
-	IntVar       int         `json:"int_var,omitempty"`
-	StringVar    string      `json:"string_var,omitempty"`
-	InterfaceVar interface{} `json:"interface,omitempty"`
-}
-
 func main() {
-	InterfaceVarIsInt := TestStruct{
-		BoolVar:      false,
-		InterfaceVar: 0,
+	orDone := func(done, c <-chan interface{}) <-chan interface{} {
+		valStream := make(chan interface{})
+		go func() {
+			defer close(valStream)
+			for {
+				select {
+				case <-done:
+					return
+				case v, ok := <-c:
+					if ok == false {
+						return
+					}
+					select {
+					case valStream <- v:
+					case <-done:
+					}
+				}
+			}
+		}()
+		return valStream
 	}
-	res, _ := json.Marshal(InterfaceVarIsInt)
-	fmt.Println(string(res))
 
-	var test TestStruct
+	tee := func(
+		done <-chan interface{},
+		in <-chan interface{},
+	) (_, _ <-chan interface{}) {
+		out1 := make(chan interface{})
+		out2 := make(chan interface{})
 
-	err := json.Unmarshal(res, &test)
-	if err != nil {
+		go func() {
+			defer close(out1)
+			defer close(out2)
 
+			for val := range orDone(done, in)  {
+				var out1, out2 = out1, out2
+				for i := 0; i < 2; i++ {
+					select {
+					case <-done:
+					case out1 <- val:
+						out1 = nil
+					case out2 <- val:
+						out2 = nil
+					}
+				}
+			}
+		}()
+
+		return out1, out2
 	}
-	fmt.Println(test.IntVar == 0)
-	//InterfaceVarIsBool := TestStruct{
-	//	BoolVar:      false,
-	//	IntVar:       0,
-	//	InterfaceVar: false,
-	//	StringVar: "",
-	//}
-	//res, _ = json.Marshal(InterfaceVarIsBool)
-	//fmt.Println(string(res))
 }

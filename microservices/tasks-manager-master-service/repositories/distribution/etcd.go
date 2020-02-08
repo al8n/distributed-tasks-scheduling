@@ -14,6 +14,8 @@ type EtcdInterface interface {
 	GetOneTask(name string) (task *entities.Task, err error)
 	GetAllTasks() (tasks []*entities.Task, err error)
 	KillTask(name string) (err error)
+
+	GetAllWorkers() ([]string, error)
 }
 
 type EtcdDB struct {

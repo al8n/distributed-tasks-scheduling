@@ -1,6 +1,8 @@
 {
   "API_RUN_ON_PORT_8777 ": "Provide CRUD services",
   "http_port": 8080,
+  "http_max_clients": 100,
+
   "grpc_port": 50051,
 
 

@@ -36,6 +36,19 @@ services:
       - /Users/Al/Development/golang/src/github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-worker-service/main:/app/main:ro
       - /Users/Al/Development/golang/src/github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/conf/tasks-manager-worker-config.json:/app/config:ro
 
+  worker-microservice-1:
+    build:
+      context: .
+      dockerfile: tasks-manager-worker-service/Dockerfile
+    container_name: "worker-microservice-1"
+    networks:
+      - microservice
+    depends_on:
+      - mongo
+
+    volumes:
+      - /Users/Al/Development/golang/src/github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/tasks-manager-worker-service/main:/app/main:ro
+      - /Users/Al/Development/golang/src/github.com/ALiuGuanyan/distributed-tasks-scheduling/microservices/conf/tasks-manager-worker-config.json:/app/config:ro
 
   master-microservice:
     build:
